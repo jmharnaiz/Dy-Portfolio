@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Appointment Scheduler</title>
+  <link rel="stylesheet" href="demo-project-template.css" />
+  <style>
+    button { background: linear-gradient(135deg, #ec4899, #db2777); color: white; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { border-bottom: 1px solid rgba(148,163,184,0.2); padding: 12px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <h1 class="page-title">Appointment Scheduler</h1>
+      <a href="Neil Herbert U. Betacura - Animated Professional Portfolio.html" class="back-link">← Back to Portfolio</a>
+    </div>
+
+    <div class="panel">
+      <span class="header-badge">Booking System</span>
+      <div class="grid">
+      <div class="card">
+        <h3>Book an Appointment</h3>
+        <label>Client Name</label>
+        <input id="clientName" type="text" placeholder="Juan Dela Cruz" />
+        <br /><br />
+        <label>Date</label>
+        <input id="dateSchedule" type="date" />
+        <br /><br />
+        <label>Service</label>
+        <select id="serviceType">
+          <option>Consultation</option>
+          <option>Technical Support</option>
+          <option>Training</option>
+        </select>
+        <br /><br />
+        <button onclick="bookAppointment()">Book Now</button>
+      </div>
+
+      <div class="card">
+        <h3>Upcoming Schedule</h3>
+        <ul id="scheduleList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const appointments = [
+      { client: 'Maria Santos', date: '2026-10-15', service: 'Consultation' },
+      { client: 'Rico Lim', date: '2026-10-18', service: 'Technical Support' }
+    ];
+
+    function renderSchedule() {
+      const list = document.getElementById('scheduleList');
+      list.innerHTML = '';
+
+      appointments.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.client} • ${item.date} • ${item.service}`;
+        list.appendChild(li);
+      });
+    }
+
+    function bookAppointment() {
+      const name = document.getElementById('clientName').value.trim();
+      const date = document.getElementById('dateSchedule').value;
+      const service = document.getElementById('serviceType').value;
+
+      if (!name || !date) {
+        alert('Please complete the client name and date.');
+        return;
+      }
+
+      appointments.push({ client: name, date, service });
+      renderSchedule();
+      document.getElementById('clientName').value = '';
+      document.getElementById('dateSchedule').value = '';
+    }
+
+    renderSchedule();
+  </script>
+</body>
+</html>

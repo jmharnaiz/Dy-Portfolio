@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Queue Management System</title>
+  <link rel="stylesheet" href="demo-project-template.css" />
+  <style>
+    .queue-number { font-size: 2.5rem; font-weight: bold; color: #67e8f9; }
+    button { background: linear-gradient(135deg, #06b6d4, #0ea5e9); color: #082f49; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { padding: 12px 0; border-bottom: 1px solid rgba(148,163,184,0.2); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <h1 class="page-title">Queue Management System</h1>
+      <a href="Neil Herbert U. Betacura - Animated Professional Portfolio.html" class="back-link">← Back to Portfolio</a>
+    </div>
+
+    <div class="panel">
+      <span class="header-badge">Service Queue</span>
+      <div class="grid">
+      <div class="card">
+        <h3>Issue Ticket</h3>
+        <label>Customer Name</label>
+        <input id="customerName" type="text" placeholder="Maria Dela Cruz" />
+        <br /><br />
+        <button onclick="addToQueue()">Generate Queue Number</button>
+      </div>
+
+      <div class="card">
+        <h3>Current Queue</h3>
+        <div class="queue-number" id="currentNumber">A-001</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <h3>Waiting List</h3>
+      <ul id="queueList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const queue = ['A-001', 'A-002', 'A-003'];
+
+    function renderQueue() {
+      const list = document.getElementById('queueList');
+      list.innerHTML = '';
+      queue.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item} • Waiting`;
+        list.appendChild(li);
+      });
+    }
+
+    function addToQueue() {
+      const name = document.getElementById('customerName').value.trim();
+      if (!name) {
+        alert('Please enter a customer name.');
+        return;
+      }
+
+      const nextNumber = `A-${String(queue.length + 1).padStart(3, '0')}`;
+      queue.push(nextNumber);
+      document.getElementById('currentNumber').textContent = nextNumber;
+      document.getElementById('customerName').value = '';
+      renderQueue();
+    }
+
+    renderQueue();
+  </script>
+</body>
+</html>
