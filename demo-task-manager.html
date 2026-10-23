@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="demo-project-template.css" />
+  <style>
+    .row { display: grid; grid-template-columns: 1fr auto; gap: 12px; }
+    .done { text-decoration: line-through; color: #9ca3af; }
+    .small-btn { width: auto; padding: 8px 12px; margin-left: 8px; background: #ef4444; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    button { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <h1 class="page-title">Task Manager</h1>
+      <a href="Neil Herbert U. Betacura - Animated Professional Portfolio.html" class="back-link">← Back to Portfolio</a>
+    </div>
+
+    <div class="panel">
+      <span class="header-badge">Productivity Tool</span>
+      <div class="row">
+        <input id="taskInput" type="text" placeholder="Add a task..." />
+        <button onclick="addTask()">Add</button>
+      </div>
+      <ul id="taskList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const tasks = [
+      'Review HTML structure',
+      'Plan project timeline',
+      'Prepare portfolio presentation'
+    ];
+
+    function renderTasks() {
+      const list = document.getElementById('taskList');
+      list.innerHTML = '';
+
+      tasks.forEach((task, index) => {
+        const item = document.createElement('li');
+        item.innerHTML = `
+          <span class="${index % 2 === 0 ? 'done' : ''}">${task}</span>
+          <div>
+            <button class="small-btn" onclick="removeTask(${index})">Delete</button>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const val = input.value.trim();
+      if (!val) {
+        alert('Please enter a task.');
+        return;
+      }
+      tasks.push(val);
+      input.value = '';
+      renderTasks();
+    }
+
+    function removeTask(index) {
+      tasks.splice(index, 1);
+      renderTasks();
+    }
+
+    renderTasks();
+  </script>
+</body>
+</html>
