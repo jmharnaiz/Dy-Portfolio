@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Attendance Tracker</title>
+  <link rel="stylesheet" href="demo-project-template.css" />
+  <style>
+    .status { font-size: 12px; padding: 5px 10px; border-radius: 999px; font-weight: 700; }
+    button { background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: #06202a; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <h1 class="page-title">Student Attendance Tracker</h1>
+      <a href="Neil Herbert U. Betacura - Animated Professional Portfolio.html" class="back-link">← Back to Portfolio</a>
+    </div>
+
+    <div class="panel">
+      <span class="header-badge">School Management</span>
+      <div class="grid">
+        <div class="card">
+          <h3>Add Attendance</h3>
+          <label>Student Name</label>
+          <input id="studentName" type="text" placeholder="e.g. Maria Santos" />
+          <br /><br />
+          <label>Subject</label>
+          <select id="subject">
+            <option>Programming</option>
+            <option>Math</option>
+            <option>Networking</option>
+            <option>Database</option>
+          </select>
+          <br /><br />
+          <label>Status</label>
+          <select id="status">
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+            <option value="Late">Late</option>
+          </select>
+          <br /><br />
+          <button onclick="addAttendance()">Save Attendance</button>
+        </div>
+
+        <div class="card">
+          <h3>Today's Summary</h3>
+          <p>Present: <strong id="presentCount">0</strong></p>
+          <p>Absent: <strong id="absentCount">0</strong></p>
+          <p>Late: <strong id="lateCount">0</strong></p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 18px;">
+        <h3>Attendance List</h3>
+        <ul id="attendanceList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const records = [
+      { name: 'Ana Reyes', subject: 'Programming', status: 'Present' },
+      { name: 'Ben Cruz', subject: 'Math', status: 'Absent' },
+      { name: 'Cleo Dela Cruz', subject: 'Networking', status: 'Late' }
+    ];
+
+    function renderAttendance() {
+      const list = document.getElementById('attendanceList');
+      list.innerHTML = '';
+      let present = 0, absent = 0, late = 0;
+
+      records.forEach(record => {
+        const item = document.createElement('li');
+        const statusClass = record.status.toLowerCase();
+        item.innerHTML = `<span>${record.name} • ${record.subject}</span><span class="status ${statusClass}">${record.status}</span>`;
+        list.appendChild(item);
+
+        if (record.status === 'Present') present++;
+        if (record.status === 'Absent') absent++;
+        if (record.status === 'Late') late++;
+      });
+
+      document.getElementById('presentCount').textContent = present;
+      document.getElementById('absentCount').textContent = absent;
+      document.getElementById('lateCount').textContent = late;
+    }
+
+    function addAttendance() {
+      const name = document.getElementById('studentName').value.trim();
+      const subject = document.getElementById('subject').value;
+      const status = document.getElementById('status').value;
+
+      if (!name) {
+        alert('Please enter a student name.');
+        return;
+      }
+
+      records.push({ name, subject, status });
+      document.getElementById('studentName').value = '';
+      renderAttendance();
+    }
+
+    renderAttendance();
+  </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Dashboard</title>
+  <link rel="stylesheet" href="demo-project-template.css" />
+  <style>
+    .stat { font-size: 2rem; font-weight: bold; color: #67e8f9; }
+    button { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid rgba(148,163,184,0.2); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <h1 class="page-title">Inventory Dashboard</h1>
+      <a href="Neil Herbert U. Betacura - Animated Professional Portfolio.html" class="back-link">← Back to Portfolio</a>
+    </div>
+
+    <div class="panel">
+      <span class="header-badge">Inventory System</span>
+      <div class="grid">
+      <div class="card"><div>Items in Stock</div><div class="stat" id="stockCount">0</div></div>
+      <div class="card"><div>Low Stock</div><div class="stat" id="lowStockCount">0</div></div>
+      <div class="card"><div>Total Value</div><div class="stat" id="totalValue">₱0</div></div>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <h3>Add New Item</h3>
+      <div class="grid">
+        <div><label>Item</label><input id="itemName" type="text" placeholder="Keyboard" /></div>
+        <div><label>Qty</label><input id="itemQty" type="number" value="10" /></div>
+        <div><label>Price</label><input id="itemPrice" type="number" value="500" /></div>
+      </div>
+      <br />
+      <button onclick="addItem()">Add Item</button>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <h3>Current Inventory</h3>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Price</th><th>Status</th></tr>
+        </thead>
+        <tbody id="inventoryTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const items = [
+      { name: 'Keyboard', qty: 15, price: 500 },
+      { name: 'Mouse', qty: 8, price: 250 },
+      { name: 'Monitor', qty: 4, price: 4500 }
+    ];
+
+    function renderInventory() {
+      const table = document.getElementById('inventoryTable');
+      table.innerHTML = '';
+      let stock = 0, lowStock = 0, total = 0;
+
+      items.forEach(item => {
+        stock += item.qty;
+        total += item.qty * item.price;
+        const status = item.qty <= 5 ? 'Low Stock' : 'Healthy';
+        if (item.qty <= 5) lowStock++;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${item.name}</td><td>${item.qty}</td><td>₱${item.price}</td><td>${status}</td>`;
+        table.appendChild(row);
+      });
+
+      document.getElementById('stockCount').textContent = stock;
+      document.getElementById('lowStockCount').textContent = lowStock;
+      document.getElementById('totalValue').textContent = '₱' + total.toLocaleString();
+    }
+
+    function addItem() {
+      const name = document.getElementById('itemName').value.trim();
+      const qty = Number(document.getElementById('itemQty').value || 0);
+      const price = Number(document.getElementById('itemPrice').value || 0);
+
+      if (!name || qty <= 0 || price <= 0) {
+        alert('Please fill in all valid item details.');
+        return;
+      }
+
+      items.push({ name, qty, price });
+      renderInventory();
+      document.getElementById('itemName').value = '';
+      document.getElementById('itemQty').value = 10;
+      document.getElementById('itemPrice').value = 500;
+    }
+
+    renderInventory();
+  </script>
+</body>
+</html>
